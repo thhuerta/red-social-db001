@@ -55,11 +55,36 @@ services:
       - db
     networks:
       - red_social_network 
+    # Servicio para Prometheus
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml  # Configuración de Prometheus
+      - prometheus_data:/prometheus  # Volumen para almacenar datos
+    ports:
+      - "9090:9090"  # Puerto para acceder a la interfaz web de Prometheus
+    restart: unless-stopped
+    networks:
+      - red_social_network
+
+  postgres_exporter:
+    image: wrouesnel/postgres_exporter:latest
+    environment:
+      DATA_SOURCE_NAME: "postgresql://user:password@db:5432/red_social?sslmode=disable"
+    ports:
+      - "9187:9187"
+    depends_on:
+      - db
+    networks:
+      - red_social_network
 
 volumes:
   postgres_data:
   grafana_data:
   pgadmin-data:
+  prometheus_data:
+
 
 networks:
   red_social_network:
