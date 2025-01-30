@@ -75,3 +75,9 @@ def create_message(db: Session, message: schemas.MessageCreate, user_id: int):
 def get_users_to_follow(db: Session, user_id: int, skip: int = 0, limit: int = 10):
     # Obtener usuarios que no sigues
     return db.query(models.User).filter(models.User.id != user_id).offset(skip).limit(limit).all()
+
+def is_following(db: Session, follower_id: int, followed_id: int) -> bool:
+    return db.query(models.Follower).filter(
+        models.Follower.follower_id == follower_id,
+        models.Follower.followed_id == followed_id
+    ).first() is not None

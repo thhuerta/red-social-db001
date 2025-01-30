@@ -39,16 +39,17 @@ def get_current_user(username: str = Cookie(None), db: Session = Depends(get_db)
 @app.get("/home", response_class=HTMLResponse)
 async def home(request: Request, db: Session = Depends(get_db), user: schemas.User = Depends(get_current_user)):
     posts = crud.get_posts(db)
-    users_to_follow = crud.get_users_to_follow(db, user.id)
+    users_to_follow = crud.get_users_to_follow(db, user.id if user else None)
     return templates.TemplateResponse("home.html", {
         "request": request,
         "posts": posts,
         "users_to_follow": users_to_follow,
-        "user": user
+        "user": user,
+        "crud": crud,  # Pasar el módulo crud a la plantilla
+        "db": db  
     })
-
 # Mostrar formulario de registro
-@app.get("/register", response_class=HTMLResponse)
+@app.get("/", response_class=HTMLResponse)
 async def show_register_form(request: Request):
     return templates.TemplateResponse("register.html", {"request": request, "message": ""})
 
@@ -141,7 +142,7 @@ async def add_comment(
 
     comment = schemas.CommentCreate(content=content, post_id=post_id)
     crud.create_comment(db, comment, user.id)
-    return RedirectResponse(url="/", status_code=status.HTTP_303_SEE_OTHER)
+    return RedirectResponse(url="/home", status_code=status.HTTP_303_SEE_OTHER)
 
 # Dar like a un post
 @app.post("/like_post/{post_id}", response_class=RedirectResponse)
@@ -156,7 +157,7 @@ async def like_post(
 
     like = schemas.LikeCreate(post_id=post_id)
     crud.create_like(db, like, user.id)
-    return RedirectResponse(url="/", status_code=status.HTTP_303_SEE_OTHER)
+    return RedirectResponse(url="/home", status_code=status.HTTP_303_SEE_OTHER)
 
 # Seguir a un usuario
 @app.post("/follow_user/{user_id}", response_class=RedirectResponse)
@@ -169,7 +170,12 @@ async def follow_user(
     if not user:
         return RedirectResponse(url="/login", status_code=status.HTTP_303_SEE_OTHER)
 
+    # Verificar si el usuario ya sigue al otro usuario
+    if crud.is_following(db, user.id, user_id):
+        # Si ya lo sigue, puedes devolver un mensaje o simplemente redirigir
+        return RedirectResponse(url="/home", status_code=status.HTTP_303_SEE_OTHER)
+
     follow = schemas.FollowerCreate(followed_id=user_id)
     crud.create_follower(db, follow, user.id)
-    return RedirectResponse(url="/", status_code=status.HTTP_303_SEE_OTHER)
+    return RedirectResponse(url="/home", status_code=status.HTTP_303_SEE_OTHER)
 
