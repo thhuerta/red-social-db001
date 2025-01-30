@@ -13,14 +13,13 @@ class User(Base):
     profile_image = Column(String, default="default_profile_image.png")
 
     # Relaciones
-    posts = relationship("Post", back_populates="user")  # Un usuario tiene muchos posts
-    comments = relationship("Comment", back_populates="user")  # Un usuario tiene muchos comentarios
-    likes = relationship("Like", back_populates="user")  # Un usuario tiene muchos likes
-    followers = relationship("Follower", foreign_keys="Follower.followed_id", back_populates="followed_user")  # Seguidores
-    following = relationship("Follower", foreign_keys="Follower.follower_id", back_populates="follower_user")  # Siguiendo
-    sent_messages = relationship("Message", foreign_keys="Message.sender_id", back_populates="sender")  # Mensajes enviados
-    received_messages = relationship("Message", foreign_keys="Message.receiver_id", back_populates="receiver")  # Mensajes recibidos
-
+    posts = relationship("Post", back_populates="user")
+    comments = relationship("Comment", back_populates="user")
+    likes = relationship("Like", back_populates="user")
+    followers = relationship("Follower", foreign_keys="Follower.followed_id", back_populates="followed_user")
+    following = relationship("Follower", foreign_keys="Follower.follower_id", back_populates="follower_user")
+    sent_messages = relationship("Message", foreign_keys="Message.sender_id", back_populates="sender")
+    received_messages = relationship("Message", foreign_keys="Message.receiver_id", back_populates="receiver")
 
 class Post(Base):
     __tablename__ = "posts"
@@ -31,10 +30,9 @@ class Post(Base):
     created_at = Column(DateTime, default=func.now())
 
     # Relaciones
-    user = relationship("User", back_populates="posts")  # Un post pertenece a un usuario
-    comments = relationship("Comment", back_populates="post")  # Un post tiene muchos comentarios
-    likes = relationship("Like", back_populates="post")  # Un post tiene muchos likes
-
+    user = relationship("User", back_populates="posts")
+    comments = relationship("Comment", back_populates="post")
+    likes = relationship("Like", back_populates="post")
 
 class Comment(Base):
     __tablename__ = "comments"
@@ -46,8 +44,8 @@ class Comment(Base):
     created_at = Column(DateTime, default=func.now())
 
     # Relaciones
-    user = relationship("User", back_populates="comments")  # Un comentario pertenece a un usuario
-    post = relationship("Post", back_populates="comments")  # Un comentario pertenece a un post
+    user = relationship("User", back_populates="comments")
+    post = relationship("Post", back_populates="comments")
 
 class Like(Base):
     __tablename__ = "likes"
@@ -58,12 +56,8 @@ class Like(Base):
     created_at = Column(DateTime, default=func.now())
 
     # Relaciones
-    user = relationship("User", back_populates="likes")  # Un like pertenece a un usuario
-    post = relationship("Post", back_populates="likes")  # Un like pertenece a un post
-
-
-
-
+    user = relationship("User", back_populates="likes")
+    post = relationship("Post", back_populates="likes")
 
 class Follower(Base):
     __tablename__ = "followers"
@@ -74,8 +68,8 @@ class Follower(Base):
     created_at = Column(DateTime, default=func.now())
 
     # Relaciones
-    follower_user = relationship("User", foreign_keys=[follower_id], back_populates="following")  # Usuario que sigue
-    followed_user = relationship("User", foreign_keys=[followed_id], back_populates="followers")  # Usuario seguido
+    follower_user = relationship("User", foreign_keys=[follower_id], back_populates="following")
+    followed_user = relationship("User", foreign_keys=[followed_id], back_populates="followers")
 
 class Message(Base):
     __tablename__ = "messages"
@@ -88,12 +82,5 @@ class Message(Base):
     is_read = Column(Boolean, default=False)
 
     # Relaciones
-    sender = relationship("User", foreign_keys=[sender_id], back_populates="sent_messages")  # Usuario que envía el mensaje
-    receiver = relationship("User", foreign_keys=[receiver_id], back_populates="received_messages")  # Usuario que recibe el mensaje
-
-
-class test(Base):
-    __tablename__ = "test"
-
-    id = Column(Integer, primary_key=True, index=True)
-    content = Column(Text, nullable=False)
+    sender = relationship("User", foreign_keys=[sender_id], back_populates="sent_messages")
+    receiver = relationship("User", foreign_keys=[receiver_id], back_populates="received_messages")
