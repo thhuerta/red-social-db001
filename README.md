@@ -43,14 +43,7 @@ pgAdmin: Interfaz gráfica para administrar PostgreSQL.
 Prometheus: Sistema de monitoreo y alertas.
 Grafana: Herramienta de visualización de métricas.
 Pasos para Levantar el Proyecto
-1. Clonar el Repositorio
-Clona el repositorio en tu entorno de GitHub Codespaces:
-
-bash
-Copiar
-Editar
-git clone <URL_DEL_REPOSITORIO>
-cd red_social
+1. Forkear el repo
 2. Levantar los Servicios
 Ejecuta el siguiente comando para levantar todos los servicios:
 
