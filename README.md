@@ -34,6 +34,7 @@ red_social/
 │
 ├── docker-compose.yml
 └── README.md
+
 Servicios en Docker Compose
 El archivo docker-compose.yml define los siguientes servicios:
 
@@ -43,24 +44,20 @@ pgAdmin: Interfaz gráfica para administrar PostgreSQL.
 Prometheus: Sistema de monitoreo y alertas.
 Grafana: Herramienta de visualización de métricas.
 Pasos para Levantar el Proyecto
+
 1. Forkear el repo
 2. Levantar los Servicios
 Ejecuta el siguiente comando para levantar todos los servicios:
 
-bash
-Copiar
-Editar
 docker-compose up --build
+
 Esto construirá las imágenes y levantará los contenedores.
 
 3. Acceder a los Servicios
-Una vez que los contenedores estén en ejecución, puedes acceder a los servicios desde tu navegador:
+Ingresa a las URL generadas por Codespaces en la seccion de "PORTS"
 
-FastAPI: http://localhost:8000 (o la URL generada por Codespaces).
-pgAdmin: http://localhost:5050 (o la URL generada por Codespaces).
-Prometheus: http://localhost:9090 (o la URL generada por Codespaces).
-Grafana: http://localhost:3000 (o la URL generada por Codespaces).
 4. Configurar Grafana
+
 Inicia sesión en Grafana con las credenciales predeterminadas:
 
 Usuario: admin
@@ -79,7 +76,4 @@ Importa un dashboard o crea uno nuevo para visualizar las métricas.
 5. Detener los Servicios
 Para detener los servicios, ejecuta:
 
-bash
-Copiar
-Editar
-docker-compose down
+docker-compose down.
