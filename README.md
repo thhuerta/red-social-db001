@@ -1,37 +1,8 @@
-Documentación para Levantar el Proyecto en GitHub Codespaces
-Este proyecto utiliza Docker Compose para gestionar múltiples servicios, incluyendo una aplicación FastAPI, una base de datos PostgreSQL, pgAdmin, Prometheus, y Grafana. A continuación, se detallan los pasos para levantar el proyecto en GitHub Codespaces.
+Documentación para Levantar el Proyecto en GitHub Codespaces.
 
-El proyecto tiene la siguiente estructura de directorios:
+Este proyecto utiliza Docker Compose para gestionar múltiples servicios, incluyendo una aplicación FastAPI, una base de datos PostgreSQL, pgAdmin, Prometheus, y Grafana. 
 
-    red_social/
-    │
-    ├── backend/
-    │   ├── app/
-    │   │   ├── init.py
-    │   │   ├── main.py
-    │   │   ├── models.py
-    │   │   ├── schemas.py
-    │   │   ├── crud.py
-    │   │   ├── database.py
-    │   │   └── templates/
-    │   │       └── index.html
-    │   ├── requirements.txt
-    │   └── Dockerfile
-    │
-    ├── grafana/
-    │   └── provisioning/
-    │       ├── dashboards/
-    │       │   └── dashboard.yml
-    │       └── datasources/
-    │           └── datasource.yml
-    │
-    ├── prometheus/
-    │   └── prometheus.yml
-    │
-    ├── docker-compose.yml
-    └── README.md
-
-Servicios en Docker Compose.
+Servicios alojados en Docker Compose.
     El archivo docker-compose.yml define los siguientes servicios:
 
     -PostgreSQL: Base de datos para la aplicación.
@@ -40,7 +11,7 @@ Servicios en Docker Compose.
     -Prometheus: Sistema de monitoreo y alertas.
     -Grafana: Herramienta de visualización de métricas.
 
-# Pasos para levantar el proyecto
+# A continuacion se detallan los pasos para levantar el proyecto.
 
 ## 1. Forkear el repositorio
 Debes hacer click en Fork en la parte derecha del nombre del repositorio.
